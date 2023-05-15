@@ -5,6 +5,7 @@
 #include "schedulers.h"
 #include "task.h"
 #include "list.h"
+#include "CPU.h"
 
 // add a task to the list 
 void add(char *name, int priority, int burst){
@@ -26,5 +27,24 @@ void add(char *name, int priority, int burst){
 
 // invoke the scheduler
 void schedule(){
-   traverse(fila);
+   struct node * nav;
+
+   while (fila != NULL) {
+      nav = fila;
+      while (nav!=NULL) {
+         run(nav->task, QUANTUM);
+         nav->task->burst-= QUANTUM;
+         if (nav->task->burst <= 0) {
+            struct node * nav_p = nav->next;
+            finish(nav->task);
+            delete(&fila, nav->task);
+            free(nav->task);
+            nav = nav_p;
+         }
+         else {
+            remaining(nav->task);
+            nav = nav->next;
+         }
+      }
+   }
 }
