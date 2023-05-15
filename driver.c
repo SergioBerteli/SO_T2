@@ -26,8 +26,6 @@ int main(int argc, char *argv[])
     int priority;
     int burst;
 
-    //fila = malloc(sizeof(struct node *));
-    //*fila = malloc(sizeof(struct node));
 
     in = fopen(argv[1],"r");
     
@@ -47,8 +45,6 @@ int main(int argc, char *argv[])
 
     // invoke the scheduler
     schedule();
-    //free((*fila));
-    //free((fila));
 
     return 0;
 }
